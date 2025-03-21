@@ -1,0 +1,29 @@
+/* Style the header */
+h1 {
+    margin-bottom: 20px;
+}
+
+/* Adding some margin to the input field */
+#taskInput {
+    margin-bottom: 10px;
+}
+
+/* Style for the list items */
+.list-group-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Add some whitespace around the header and form */
+body {
+    background-color: #f7f7f7;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
