@@ -57,6 +57,29 @@ class Todos {
         .catch((error) => reject(error));  // Handle any errors
     });
   };
+
+  // Private method to remove task from the tasks array
+  #removeFromArray = (id) => {
+    const arrayWithoutRemoved = this.#tasks.filter((task) => task.getId() !== id);  // Filter out the task with the given id
+    this.#tasks = arrayWithoutRemoved;  // Update the tasks array
+  };
+
+  // Public method to remove a task
+  removeTask = (id) => {
+    return new Promise((resolve, reject) => {
+      fetch(this.#backend_url + '/task/' + id, {
+        method: 'DELETE',  // DELETE method
+      })
+        .then(response => response.json())
+        .then(json => {
+          resolve(id);  // Return the task ID (which is the same as the ID passed)
+        })
+        .catch((error) => {
+          reject("Error deleting task: " + error);  // Handle errors
+        });
+    });
+  }
+  
 }
 
 export { Todos };

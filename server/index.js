@@ -3,6 +3,7 @@ const cors = require('cors');
 const { Pool } = require('pg');
 const app = express();
 
+// Set up PostgreSQL connection
 const pool = new Pool({
   user: 'postgres',
   host: 'localhost',
@@ -11,13 +12,12 @@ const pool = new Pool({
   port: 5432,
 });
 
-app.use(cors());
-app.use(express.json());  // Allow parsing of JSON request bodies
+// Middleware to parse JSON and urlencoded data
+app.use(cors());  // Enable Cross-Origin Resource Sharing
+app.use(express.json());  // Middleware to parse JSON bodies
+app.use(express.urlencoded({ extended: false }));  // Middleware to parse URL-encoded bodies
 
-// Route to handle the root path
-app.get('/', (req, res) => {
-  res.send('Server is running');
-});
+const port = 3001;
 
 // Route to fetch all tasks
 app.get('/task', async (req, res) => {
@@ -34,15 +34,16 @@ app.post('/new', async (req, res) => {
   const { description } = req.body;
   try {
     const result = await pool.query('INSERT INTO task (description) VALUES ($1) RETURNING *', [description]);
-    res.status(200).json(result.rows[0]);  // Return the newly added task with ID
+    res.status(200).json(result.rows[0]);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
-// Route to delete a task
+// Route to delete a task using the task's id as a URL parameter
 app.delete('/task/:id', async (req, res) => {
   const { id } = req.params;
+  console.log(`Deleting task with ID: ${id}`);  // Log the ID for debugging
   try {
     const result = await pool.query('DELETE FROM task WHERE id = $1 RETURNING *', [id]);
     if (result.rowCount > 0) {
@@ -55,7 +56,8 @@ app.delete('/task/:id', async (req, res) => {
   }
 });
 
+
 // Start the server
-app.listen(3001, () => {
-  console.log('Server running on http://localhost:3001');
+app.listen(port, () => {
+  console.log(`Server running on http://localhost:${port}`);
 });

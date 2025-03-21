@@ -11,3 +11,6 @@ Content-Type: application/json
   "description": "Test from REST Client"
 }
 
+### Delete task
+DELETE http://localhost:3001/task/1
+Content-Type: application/json
