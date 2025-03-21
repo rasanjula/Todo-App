@@ -18,13 +18,13 @@ class Todos {
   // Method to fetch tasks from the backend
   getTasks = () => {
     return new Promise(async (resolve, reject) => {
-      fetch(this.#backend_url)
+      fetch(this.#backend_url + '/task')  // Ensure /task is appended to the backend URL
         .then((response) => response.json())
         .then((json) => {
-          this.#readJson(json);  // Call private method to read JSON
-          resolve(this.#tasks);  // Return the tasks array
+          this.#readJson(json);  // Process the JSON into tasks
+          resolve(this.#tasks);  // Resolve with the tasks array
         })
-        .catch((error) => reject(error));
+        .catch((error) => reject(error));  // Handle fetch error
     });
   };
 

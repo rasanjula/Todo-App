@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const { Pool } = require('pg');
 const app = express();
+
 const pool = new Pool({
   user: 'postgres',
   host: 'localhost',
@@ -12,6 +13,11 @@ const pool = new Pool({
 
 app.use(cors());
 app.use(express.json());  // Allow parsing of JSON request bodies
+
+// Route to handle the root path
+app.get('/', (req, res) => {
+  res.send('Server is running');
+});
 
 // Route to fetch all tasks
 app.get('/task', async (req, res) => {

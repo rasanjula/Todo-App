@@ -76,6 +76,5 @@ input.addEventListener('keypress', (event) => {
   }
 });
 
-
 // Fetch and render tasks when the page loads
 getTasks();
