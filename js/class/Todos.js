@@ -15,18 +15,27 @@ class Todos {
     return task;  // Return the newly added task
   };
 
-  // Method to fetch tasks from the backend
-  getTasks = () => {
-    return new Promise(async (resolve, reject) => {
-      fetch(this.#backend_url + '/task')  // Ensure /task is appended to the backend URL
-        .then((response) => response.json())
-        .then((json) => {
-          this.#readJson(json);  // Process the JSON into tasks
-          resolve(this.#tasks);  // Resolve with the tasks array
-        })
-        .catch((error) => reject(error));  // Handle fetch error
-    });
-  };
+// Method to fetch tasks from the backend
+getTasks = () => {
+  return new Promise((resolve, reject) => {
+    fetch(this.#backend_url + '/tasks')  // Corrected to /tasks route (plural)
+      .then(response => response.json())
+      .then(data => {
+        console.log('Tasks received:', data);  // Log the tasks data
+        if (Array.isArray(data)) {  // Ensure we get an array
+          this.#readJson(data);
+          resolve(this.#tasks);
+        } else {
+          reject("Invalid data format");  // Reject if data is not an array
+        }
+      })
+      .catch(error => {
+        console.log("Error retrieving tasks:", error);  // Log any fetch errors
+        reject(error);
+      });
+  });
+};
+
 
   // Private method to read JSON into the tasks array
   #readJson = (tasksAsJson) => {
@@ -67,7 +76,7 @@ class Todos {
   // Public method to remove a task
   removeTask = (id) => {
     return new Promise((resolve, reject) => {
-      fetch(this.#backend_url + '/task/' + id, {
+      fetch(this.#backend_url + '/delete/' + id, {
         method: 'DELETE',  // DELETE method
       })
         .then(response => response.json())
@@ -79,7 +88,6 @@ class Todos {
         });
     });
   }
-  
 }
 
 export { Todos };

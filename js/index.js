@@ -57,7 +57,6 @@ const renderLink = (li, id) => {
   });
 };
 
-
 // Fetch existing tasks from the backend using Todos class
 const getTasks = () => {
   todos.getTasks().then((tasks) => {
