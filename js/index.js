@@ -77,6 +77,7 @@ const addTask = async (taskDescription) => {
     //await getTasks();  // Fetch and render tasks after adding a new one
   } catch (error) {
     console.error('Failed to add task:', error);
+    console.error('Failed to add task:', error.message);
   }
 };
 
