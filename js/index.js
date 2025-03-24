@@ -71,8 +71,9 @@ const getTasks = () => {
 // Add new task to the backend and render it
 const addTask = async (taskDescription) => {
   try {
-    await todos.addTask(taskDescription);  // Add new task using the Todos class
-    await getTasks();  // Fetch and render tasks after adding a new one
+    const response = await todos.addTask(taskDescription); 
+     renderTask(response)// Add new task using the Todos class
+    //await getTasks();  // Fetch and render tasks after adding a new one
   } catch (error) {
     console.error('Failed to add task:', error);
   }
